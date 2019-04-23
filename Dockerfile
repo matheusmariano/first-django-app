@@ -4,7 +4,11 @@ WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-RUN pip install -r requirements.txt
+RUN apk update && \
+    apk add postgresql-libs && \
+    apk --virtual .build-deps add gcc musl-dev postgresql-dev && \
+    pip install -r requirements.txt && \
+    apk --purge del .build-deps
 
 COPY . ./
 
