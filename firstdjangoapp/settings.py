@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&yjyz5q1zkw@!kpmlk#p%i@o1ddy3m&$t_j2m6a3vz2zy!e+a#'
+SECRET_KEY = os.environ['APP_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = 'APP_DEBUG' in os.environ and os.environ['APP_DEBUG'] == 'True' or False
 
 ALLOWED_HOSTS = []
 
@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'firstdjangoapp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'db',
-        'PORT': 5432,
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', 'postgres'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', 'db'),
+        'PORT': int(os.getenv('DB_PORT', 5432)),
     }
 }
 
